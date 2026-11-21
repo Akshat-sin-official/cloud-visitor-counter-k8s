@@ -203,8 +203,8 @@ We compared the optimized build against an unoptimized single-stage Debian Bookw
 \centering
 \caption{Docker Image Optimization Comparison}
 \label{tab:docker_opt}
-\small
-\begin{tabularx}{\columnwidth}{l r r r}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrrr@{}}
 \toprule
 \textbf{Metric} & \textbf{Unoptimized} & \textbf{Optimized} & \textbf{Reduction} \\
 \midrule
@@ -214,7 +214,8 @@ Compressed Transfer & 338.0 MB & 23.7 MB & \textbf{92.99\%} \\
 Execution User & Root (UID 0) & appuser (10001) & Hardened \\
 Package Manager & Present & Stripped in run & Zero-CVE \\
 \bottomrule
-\end{tabularx}
+\end{tabular}%
+}
 \end{table}
 
 We verified live container operation using Docker Compose. On startup, Redis passed its health check (\texttt{redis-cli ping}), after which the visitor container initialized and served requests on port 5001. Consecutive calls confirmed atomic counter increments in Redis storage.
@@ -271,8 +272,8 @@ We enabled the Kubernetes Metrics Server and generated sustained CPU load by lau
 \centering
 \caption{Measured HPA Scaling Progression Under Load}
 \label{tab:hpa_stages}
-\small
-\begin{tabularx}{\columnwidth}{l c c c X}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Test Phase} & \textbf{Pods} & \textbf{CPU Util.} & \textbf{Target} & \textbf{HPA Controller Action} \\
 \midrule
@@ -283,7 +284,8 @@ We enabled the Kubernetes Metrics Server and generated sustained CPU load by lau
 5. Load Ends & 4 & 4\% & 50\% & Cooldown window active (60s) \\
 6. Scaled In & 2 & 3\% & 50\% & Graceful return to baseline \\
 \bottomrule
-\end{tabularx}
+\end{tabular}%
+}
 \end{table}
 
 When CPU utilization reached 89\% ($108\text{m} + 71\text{m}$ across the two existing pods), the controller computed:
@@ -333,8 +335,8 @@ Table~\ref{tab:failover_eval} details the measured performance versus production
 \centering
 \caption{Disaster Recovery Failover Latency Benchmarks}
 \label{tab:failover_eval}
-\small
-\begin{tabularx}{\columnwidth}{l r r l}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrrl@{}}
 \toprule
 \textbf{Benchmark Metric} & \textbf{Observed} & \textbf{Target SLA} & \textbf{Result} \\
 \midrule
@@ -344,7 +346,8 @@ Recovery Detection Time & 2.10 s & $<$ 5.0 s & Exceeded \\
 Failback Restoration & 3.04 s & $<$ 10.0 s & Exceeded \\
 Visitor Count Integrity & 0 Lost & 0 Lost & Maintained \\
 \bottomrule
-\end{tabularx}
+\end{tabular}%
+}
 \end{table}
 
 % =========================================================================
@@ -383,8 +386,8 @@ Table~\ref{tab:cost_summary} synthesizes the three techniques.
 \centering
 \caption{Comprehensive Cost Optimization Results}
 \label{tab:cost_summary}
-\small
-\begin{tabularx}{\columnwidth}{l r r r}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lrrr@{}}
 \toprule
 \textbf{Optimization Metric} & \textbf{Baseline} & \textbf{Optimized} & \textbf{Savings} \\
 \midrule
@@ -395,7 +398,8 @@ K8s RAM Reservation & 512 MiB & 64 MiB & \textbf{87.50\%} \\
 Node Pod Density & 7 pods/node & 36 pods/node & \textbf{+414.29\%} \\
 Daily Compute Commitment & 19.2 vCPU-h & 7.2 vCPU-h & \textbf{62.50\%} \\
 \bottomrule
-\end{tabularx}
+\end{tabular}%
+}
 \end{table}
 
 % =========================================================================
