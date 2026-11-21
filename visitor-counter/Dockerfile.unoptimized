@@ -1,0 +1,25 @@
+# ==============================================================================
+# BASELINE / UNOPTIMIZED DOCKERFILE FOR BENCHMARK COMPARISON
+# Used for Cost Optimization Technique 1 measurement
+# Base image: standard python:3.12 (Debian Bookworm) without multi-stage
+# ==============================================================================
+
+FROM python:3.12
+
+WORKDIR /app
+
+# Baseline: Install full build dependencies directly without cleaning
+RUN apt-get update && apt-get install -y gcc build-essential curl
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY app.py .
+
+ENV PORT=5001 \
+    REDIS_HOST=redis \
+    REDIS_PORT=6379
+
+EXPOSE 5001
+
+CMD ["python", "app.py"]

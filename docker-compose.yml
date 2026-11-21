@@ -1,0 +1,43 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: orbit-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  visitor-counter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: orbit-visitor-counter:latest
+    container_name: orbit-visitor-counter
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      PORT: 5001
+      CLUSTER_NAME: "ORBIT-DOCKER-LOCAL"
+      ENVIRONMENT: "production"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  redis_data:

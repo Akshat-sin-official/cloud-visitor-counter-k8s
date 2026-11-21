@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orbit-visitor-config
+  namespace: orbit-system
+  labels:
+    app: orbit-visitor-counter
+data:
+  REDIS_HOST: "orbit-redis"
+  REDIS_PORT: "6379"
+  PORT: "5001"
+  CLUSTER_NAME: "ORBIT-SECONDARY (Public Cloud Disaster Recovery)"
+  ENVIRONMENT: "dr-standby"
+  VISITOR_KEY: "orbit:visitor_count"
+  FLASK_DEBUG: "0"

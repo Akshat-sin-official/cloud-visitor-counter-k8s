@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orbit-system
+  labels:
+    app.kubernetes.io/name: orbit
+    app.kubernetes.io/part-of: orbit-platform
+    environment: secondary
